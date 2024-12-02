@@ -19,4 +19,5 @@ We have two 02 applications, developed using Python/Flask and NextJS. We want to
 
 # Requirements 
 - [ ] Test each Identity provider in a different branch,
+- [ ] Use devContainer extension to hanlde developement environement.
 
