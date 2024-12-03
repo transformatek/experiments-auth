@@ -1,0 +1,159 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:db
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+
+
+  keycloak_web:
+    image: quay.io/keycloak/keycloak:23.0.7
+    container_name: keycloak_web
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloakdb:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+
+      KC_LOG_LEVEL: info
+      KC_METRICS_ENABLED: true
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    depends_on:
+      - keycloakdb
+    ports:
+      - 8080:8080
+
+  keycloakdb:
+    image: postgres:15
+    volumes:
+      - postgres-data-keycloak:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+volumes:
+  postgres-data:
+  postgres-data-keycloak:
+
+
+
+
+#   postgresql:
+#     image: docker.io/library/postgres:16-alpine
+#     restart: unless-stopped
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+#       start_period: 20s
+#       interval: 30s
+#       retries: 5
+#       timeout: 5s
+#     volumes:
+#       - database:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+#       POSTGRES_USER: ${PG_USER:-authentik}
+#       POSTGRES_DB: ${PG_DB:-authentik}
+#     env_file:
+#       - .env
+#   redis:
+#     image: docker.io/library/redis:alpine
+#     command: --save 60 1 --loglevel warning
+#     restart: unless-stopped
+#     healthcheck:
+#       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+#       start_period: 20s
+#       interval: 30s
+#       retries: 5
+#       timeout: 3s
+#     volumes:
+#       - redis:/data
+#   server:
+#     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.10.4}
+#     restart: unless-stopped
+#     command: server
+#     environment:
+#       AUTHENTIK_REDIS__HOST: redis
+#       AUTHENTIK_POSTGRESQL__HOST: postgresql
+#       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+#       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+#       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+#     volumes:
+#       - ./media:/media
+#       - ./custom-templates:/templates
+#     env_file:
+#       - .env
+#     ports:
+#       - "${COMPOSE_PORT_HTTP:-9000}:9000"
+#       - "${COMPOSE_PORT_HTTPS:-9443}:9443"
+#     depends_on:
+#       - postgresql
+#       - redis
+#   worker:
+#     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2024.10.4}
+#     restart: unless-stopped
+#     command: worker
+#     environment:
+#       AUTHENTIK_REDIS__HOST: redis
+#       AUTHENTIK_POSTGRESQL__HOST: postgresql
+#       AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+#       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+#       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+#     # `user: root` and the docker socket volume are optional.
+#     # See more for the docker socket integration here:
+#     # https://goauthentik.io/docs/outposts/integrations/docker
+#     # Removing `user: root` also prevents the worker from fixing the permissions
+#     # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+#     # (1000:1000 by default)
+#     user: root
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#       - ./media:/media
+#       - ./certs:/certs
+#       - ./custom-templates:/templates
+#     env_file:
+#       - .env
+#     depends_on:
+#       - postgresql
+#       - redis
+
+# volumes:
+#   database:
+#     driver: local
+#   redis:
+#     driver: local
