@@ -4,7 +4,7 @@ import os
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')  # Clé secrète pour Flask
+app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key') 
 
 # Initialisation de l'extension OAuth
 oauth = OAuth(app)
@@ -12,9 +12,9 @@ oauth = OAuth(app)
 # Enregistrement du client Keycloak
 keycloak = oauth.register(
     name='keycloak',
-    client_id='your-client-id',  # Remplacez par votre client_id Keycloak
-    client_secret='your-client-secret',  # Remplacez par votre client_secret Keycloak
-    server_metadata_url='http://localhost:8080/realms/your-realm/.well-known/openid-configuration',  # URL de configuration de Keycloak
+    client_id='app2-client',  
+    client_secret='RucCUHrjR9zutmQD04p6dWqDH4QcA18R', 
+    server_metadata_url='http://localhost:8080/realms/Authentification/.well-known/openid-configuration', 
     client_kwargs={'scope': 'openid profile email'}
 )
 
@@ -47,8 +47,12 @@ def profile():
 
 @app.route('/logout')
 def logout():
-    session.clear()  # Effacer la session de l'utilisateur
+    session.clear() 
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=7000)  
+
+
+
+
