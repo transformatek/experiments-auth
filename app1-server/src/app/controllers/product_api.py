@@ -7,10 +7,10 @@ from app import appbuilder
 
 
 
-class TestModelApi(ModelRestApi):
-    resource_name = "test"
+class ProductModelApi(ModelRestApi):
+    resource_name = "product"
     base_order = ("id", "desc")
     datamodel = SQLAInterface(Product)
 
 
-appbuilder.add_api(TestModelApi)
+appbuilder.add_api(ProductModelApi)

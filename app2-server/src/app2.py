@@ -44,6 +44,18 @@ def profile():
     if user:
         return f'Bonjour {user["name"]}! <br><a href="/logout">Déconnexion</a>'
     return 'Utilisateur non connecté!'
+@app.route('/callback')
+def callback():
+    try:
+        # Récupérer le token d'accès après la redirection de Keycloak
+        token = keycloak.authorize_access_token()
+        user_info = keycloak.parse_id_token(token)
+
+        # Stocker les informations utilisateur dans la session
+        session['user'] = user_info
+        return redirect('/profile')
+    except Exception as e:
+        return f"Erreur d'authentification: {str(e)}"
 
 @app.route('/logout')
 def logout():
