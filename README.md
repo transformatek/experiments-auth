@@ -29,7 +29,13 @@ We have two 02 applications, developed using Python/Flask and NextJS. We want to
   - 📄 [Supabase Auth Documentation](https://supabase.com/docs/guides/auth)
   - 📄 [Supabase Auth /nextjs Documentation ](https://supabase.com/docs/guides/auth/quickstarts/nextjs)
   - 📄 [NextAuth.js Documentation](https://next-auth.js.org/providers/keycloak)
-  - 📄 [Implementing Authentication in Next.js v13 Application with Keycloak(Part — 1)](https://medium.com/inspiredbrilliance/implementing-authentication-in-next-js-v13-application-with-keycloak-part-1-f4817c53c7ef)
+  - 📄 [Implementing Authentication in Next.js v13 Application with Keycloak(Part — 1)](https://medium.com/inspiredbrilliance/implementing-authentication-in-next-js-v13-application-with-keycloak-part-1-f4817c53c7ef)- 
+  - 📄 [IBuilding a Secure Authentication System with Keycloak, React, and Flask](https://darkaico.medium.com/building-a-secure-authentication-system-with-keycloak-react-and-flask-35aeee04e37a)
+
+### 2. Research and Documentation Videos
+
+    🎥 [Implement OAuth 2.0 Authorization Code flow using authlib in python flask web apps | Single Sign On- Tutoriel vidéo] (https://youtu.be/O065sJQs51U?si=FEUMX_bHF3j4-oI-)
+    🎥 [SSO with OIDC: Integrate Keycloak V.25 in Flask for Secure Login & Logout- Tutoriel vidéo] (https://youtu.be/2KQ4BsJf33E?si=7xFDLJAYsMf1QAUN)
 
 ## keycloak L
 

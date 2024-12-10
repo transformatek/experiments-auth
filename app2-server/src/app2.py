@@ -1,20 +1,21 @@
 from flask import Flask, redirect, url_for, session
 from authlib.integrations.flask_client import OAuth
 import os
+from flask import redirect, url_for
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key') 
+app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')  # Utiliser une clé secrète unique
 
 # Initialisation de l'extension OAuth
 oauth = OAuth(app)
 
-# Enregistrement du client Keycloak
+# Enregistrement du client Keycloak pour app1
 keycloak = oauth.register(
     name='keycloak',
-    client_id='app2-client',  
-    client_secret='RucCUHrjR9zutmQD04p6dWqDH4QcA18R', 
-    server_metadata_url='http://localhost:8080/realms/Authentification/.well-known/openid-configuration', 
+    client_id='app1',  # ID du client dans Keycloak
+    client_secret='VOTRE_CLIENT_SECRET',  # Remplacez par le client_secret de app1 depuis Keycloak
+    server_metadata_url='http://localhost:8080/realms/Authentification/.well-known/openid-configuration',
     client_kwargs={'scope': 'openid profile email'}
 )
 
@@ -45,14 +46,14 @@ def profile():
         return f'Bonjour {user["name"]}! <br><a href="/logout">Déconnexion</a>'
     return 'Utilisateur non connecté!'
 
+@app.route('/login/callback')
+def oauth2callback():
+    return redirect(url_for('index'))
+
 @app.route('/logout')
 def logout():
-    session.clear() 
+    session.clear()  # Déconnecte l'utilisateur
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000)  
-
-
-
-
+    app.run(host='0.0.0.0', port=5000)  # Lancer le serveur Flask
