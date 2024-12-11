@@ -30,6 +30,12 @@ We have two 02 applications, developed using Python/Flask and NextJS. We want to
   - 📄 [Supabase Auth /nextjs Documentation ](https://supabase.com/docs/guides/auth/quickstarts/nextjs)
   - 📄 [NextAuth.js Documentation](https://next-auth.js.org/providers/keycloak)
   - 📄 [Implementing Authentication in Next.js v13 Application with Keycloak(Part — 1)](https://medium.com/inspiredbrilliance/implementing-authentication-in-next-js-v13-application-with-keycloak-part-1-f4817c53c7ef)
+  - 📄 IBuilding a Secure Authentication System with Keycloak, React, and Flask
+
+### 2. Research and Documentation Videos
+    🎥 [Implement OAuth 2.0 Authorization Code flow using authlib in python flask web apps | Single Sign On- Tutoriel vidéo] (https://youtu.be/O065sJQs51U?si=FEUMX_bHF3j4-oI-)
+    🎥 [SSO with OIDC: Integrate Keycloak V.25 in Flask for Secure Login & Logout- Tutoriel vidéo] (https://youtu.be/2KQ4BsJf33E?si=7xFDLJAYsMf1QAUN)
+  
 
 ## keycloak L
 
@@ -71,6 +77,25 @@ cd app1-server
 flask run --port=5000
 ```
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
+
+## Migration steps 
+First time
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+flask db revision --rev-id a3bf43e917a8
+```
+After updates 
+```bash
+flask db migrate
+flask db upgrade
+```
+## Create admin user
+
+```bash
+flask fab create-admin
+```
 
 
 

@@ -79,7 +79,7 @@ volumes:
    - In the Keycloak admin console, select your realm (`my-app-realm`).
    - Click on **Clients** in the left sidebar, then click **Create**.
    - Fill in the following fields:
-     - **Client ID**: `app1-client`
+     - **Client ID**: `app1`
      - **Client Protocol**: OpenID Connect
      - **Root URL**: `http://localhost:5000` (adjust if your backend runs on a different port).
    
