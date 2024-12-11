@@ -30,8 +30,9 @@ We have two 02 applications, developed using Python/Flask and NextJS. We want to
   - 📄 [Supabase Auth /nextjs Documentation ](https://supabase.com/docs/guides/auth/quickstarts/nextjs)
   - 📄 [NextAuth.js Documentation](https://next-auth.js.org/providers/keycloak)
   - 📄 [Implementing Authentication in Next.js v13 Application with Keycloak(Part — 1)](https://medium.com/inspiredbrilliance/implementing-authentication-in-next-js-v13-application-with-keycloak-part-1-f4817c53c7ef)
+  - 📄 [IImplementing Authentication in Next.js v13 Application with Keycloak(Part — 2)](https://medium.com/inspiredbrilliance/implementing-authentication-in-next-js-v13-application-with-keycloak-part-2-6f68406bb3b5)
 
-## keycloak L
+## keycloak 
 
 To access the Keycloak admin interface, visit http://localhost:8080.
 
