@@ -97,6 +97,19 @@ flask db upgrade
 flask fab create-admin
 ```
 
+## Get Keycloack login token 
+
+Realm settings -> Token -> Default Signature Algorithm = HS256
+
+```bash
+curl -d 'client_id=app1' -d 'username=ali' -d 'password=ali' -d 'grant_type=password' -d 'scope=email profile roles'  -d 'client_secret=1FHCq1hVvCedmPGJ0piQ2odhbRBSMnFU' 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/token'
+```
+
+To decode the JWT Token use [https://jwt.io/](https://jwt.io/)
+
+
+
+
 
 
 

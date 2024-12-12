@@ -34,8 +34,10 @@ FAB_API_SWAGGER_UI = True
 # AUTH_DB : Is for database (username/password()
 # AUTH_LDAP : Is for LDAP
 # AUTH_REMOTE_USER : Is for using REMOTE_USER from web server
-AUTH_TYPE = AUTH_OAUTH
 # AUTH_TYPE = AUTH_DB
+AUTH_TYPE = AUTH_OAUTH
+
+LOGOUT_REDIRECT_URL = f"http://localhost:8080/realms/myrealm/protocol/openid-connect/logout"
 
 OAUTH_PROVIDERS = [
     {
@@ -43,17 +45,54 @@ OAUTH_PROVIDERS = [
         'token_key': 'access_token',
         'icon': 'fa-address-card',
         'remote_app': {
-        "jwks_uri": "http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/certs",
-            'client_id': 'app1-server',
-            'client_secret': 'PG4yQho0MW9kOfjgKPj9jiI1tqslDQmf',
-            'api_base_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect',
-            'access_token_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/token',
-            'authorize_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/auth',
+            "jwks_uri": "http://localhost:8080/realms/myrealm/protocol/openid-connect/certs",
+            'client_id': 'app1',
+            'client_secret': 'cEtqXR9Z9Lxqgf9tszDHgZ8K8p3FxoIN',
+            'api_base_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect',
+            'access_token_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/token',
+            'authorize_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/auth',
             'client_kwargs': {'scope': 'openid email profile roles'},
         },
     }
 ]
 
+# ----------------------------------------------------------
+# Required config to get Keycloak token for Superset API use
+# https://github.com/mitodl/ol-infrastructure/blob/550d5c3f64d4c315cbdc0517fdebe091fa921c2e/src/ol_superset/pythonpath/superset_config.py
+# https://github.com/mitodl/ol-infrastructure/issues/2432
+# ----------------------------------------------------------
+# URL to the JWKS endpoint
+JWT_ALGORITHM = "RS256"
+# JWT_DECODE_ALGORITHMS = ["RS256"]
+
+import json
+import urllib.request
+
+public_key_url = f"http://localhost:8080/realms/myrealm"
+
+def fetch_keycloak_rs256_public_cert():
+    with urllib.request.urlopen(public_key_url) as response:  # noqa: S310
+        public_key_url_response = json.load(response)
+    public_key = public_key_url_response["public_key"]
+    if public_key:
+        pem_lines = [
+            "-----BEGIN PUBLIC KEY-----",
+            public_key,
+            "-----END PUBLIC KEY-----",
+        ]
+        cert_pem = "\n".join(pem_lines)
+    else:
+        cert_pem = "No cert found"
+    return cert_pem
+
+
+JWT_PUBLIC_KEY = fetch_keycloak_rs256_public_cert()
+print(JWT_PUBLIC_KEY)
+
+
+
+# Allow for managing users and roles via API
+FAB_ADD_SECURITY_API = False
 
 # Uncomment to setup Full admin role name
 # AUTH_ROLE_ADMIN = 'Admin'
