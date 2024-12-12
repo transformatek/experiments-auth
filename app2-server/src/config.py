@@ -43,12 +43,12 @@ OAUTH_PROVIDERS = [
         'token_key': 'access_token',
         'icon': 'fa-address-card',
         'remote_app': {
-        "jwks_uri": "http://localhost:8080/realms/myrealm/protocol/openid-connect/certs",
-            'client_id': 'app2',
-            'client_secret': 'ZrgcL85ztes8kNVd8fhSO6EAgd93J9kq',
-            'api_base_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect',
-            'access_token_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/token',
-            'authorize_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/auth',
+        "jwks_uri": "http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/certs",
+            'client_id': 'app1-server',
+            'client_secret': 'PG4yQho0MW9kOfjgKPj9jiI1tqslDQmf',
+            'api_base_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect',
+            'access_token_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/token',
+            'authorize_url': 'http://keycloack.local:8080/realms/myrealm/protocol/openid-connect/auth',
             'client_kwargs': {'scope': 'openid email profile roles'},
         },
     }
