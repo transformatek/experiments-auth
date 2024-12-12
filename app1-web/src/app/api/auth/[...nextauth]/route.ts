@@ -1,12 +1,13 @@
 // src/app/api/auth/[...nextauth]/route.ts
 import NextAuth, { AuthOptions, TokenSet } from "next-auth";
-import { JWT } from "next-auth/jwt";
+import {  JWT } from "next-auth/jwt";
 import KeycloakProvider from "next-auth/providers/keycloak"
 
 
 console.log(process.env.KEYCLOAK_CLIENT_ID,
     process.env.KEYCLOAK_CLIENT_SECRET,
     process.env.KEYCLOAK_ISSUER);
+
 function requestRefreshOfAccessToken(token: JWT) {
     // Check if the refreshToken is a string before passing it
     if (typeof token.refreshToken !== 'string') {
@@ -27,24 +28,33 @@ function requestRefreshOfAccessToken(token: JWT) {
 
     
 export const authOptions: AuthOptions = {
-    providers: [
+    providers: [        
         KeycloakProvider({
             clientId: process.env.KEYCLOAK_CLIENT_ID,
             clientSecret: process.env.KEYCLOAK_CLIENT_SECRET,
             issuer: process.env.KEYCLOAK_ISSUER
         })
     ],
+    pages: {
+        signIn: '/auth/signin',
+        signOut: '/auth/signout',
+    },
      session: {
         maxAge: 60 * 30
     },
     callbacks: {
+        
         async jwt({ token, account }) {
+            // console.log(token);
+            // console.log(token.accessToken);
+            
             if (account) {
                 token.idToken = account.id_token
                 token.accessToken = account.access_token
                 token.refreshToken = account.refresh_token
                 token.expiresAt = account.expires_at
-                return token
+                return token        
+
             }
 
             // We take a buffer of one minute (60 * 1000 ms)
@@ -59,14 +69,13 @@ export const authOptions: AuthOptions = {
 
                     if (!response.ok) throw tokens
 
-                    // Ensure expires_in is a number before using it
-                    const expiresIn = typeof tokens.expires_in === 'number' ? tokens.expires_in : 3600; // Default to 3600 if invalid
+                    const expiresIn = typeof tokens.expires_in === 'number' ? tokens.expires_in : 3600; 
 
                     const updatedToken: JWT = {
-                        ...token, // Keep the previous token properties
+                        ...token, 
                         idToken: tokens.id_token,
                         accessToken: tokens.access_token,
-                        expiresAt: Math.floor(Date.now() / 1000 + expiresIn), // Use the validated expiresIn
+                        expiresAt: Math.floor(Date.now() / 1000 + expiresIn),
                         refreshToken: tokens.refresh_token ?? token.refreshToken,
                     }
                     return updatedToken
