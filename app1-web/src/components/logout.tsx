@@ -1,5 +1,6 @@
 "use client";
-import { signOut } from "next-auth/react";
+import federatedLogout from "@/utils/federatedLogout";
+// import { signOut } from "next-auth/react";
 
 export default function Logout() {
     return (
@@ -13,7 +14,8 @@ export default function Logout() {
             }}
         >
             <button
-                onClick={() => signOut()}
+                // onClick={() => signOut()}
+                onClick={() => federatedLogout()}
                 style={{
                     backgroundColor: "#eda879",
                     color: "#fff",
