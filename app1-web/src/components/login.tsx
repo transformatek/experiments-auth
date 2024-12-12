@@ -13,7 +13,7 @@ export default function Login() {
             }}
         >
             <button
-                onClick={() => signIn("keycloak")}
+                onClick={() => signIn("keycloak", { callbackUrl: "http://localhost:3000/" })}
                 style={{
                     backgroundColor: "#206fba",
                     color: "#fff",
