@@ -123,13 +123,6 @@ We also need to configure **NEXTAUTH_URL** and **NEXTAUTH_SECRET**. These are es
 
 #### 3.1.3 Backend Configuration (Flask)
 
-In your Flask app, you'll need to install the `Flask-OIDC` library and configure it to communicate with Keycloak.
-
-```bash
-pip install Flask-OIDC
-```
-Next, configure your Flask application to communicate with Keycloak.
-
 In your configuration file, for example **config.py**, add the following settings:
 
 ```bash
@@ -137,19 +130,17 @@ OAUTH_PROVIDERS = [
     {
         'name': 'keycloak',
         'token_key': 'access_token',
-        'icon': 'fa-key',
+        'icon': 'fa-address-card',
         'remote_app': {
-            'client_id': 'app2-client',
-            'client_secret': 'RucCUHrjR9zutmQD04p6dWqDH4QcA18R',
-            'api_base_url': 'http://localhost:8080/realms/Authentification/protocol/openid-connect/',
-            'client_kwargs': {'scope': 'openid email profile'},
-            'access_token_url': 'http://localhost:8080/realms/Authentification/protocol/openid-connect/token',
-            'authorize_url': 'http://localhost:8080/realms/Authentification/protocol/openid-connect/auth',
-            'userinfo_endpoint': 'http://localhost:8080/realms/Authentification/protocol/openid-connect/userinfo',
-            'redirect_uri': [
-            "http://localhost:7000/*"
-        ],
+            "jwks_uri": "http://localhost:8080/realms/myrealm/protocol/openid-connect/certs",
+            'client_id': 'app2',
+            'client_secret': 'ZrgcL85ztes8kNVd8fhSO6EAgd93J9kq',
+            'api_base_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect',
+            'access_token_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/token',
+            'authorize_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/auth',
+            'client_kwargs': {'scope': 'openid email profile roles'},
         },
+
 ]
 ```
 ## Step 4 : Configure Users 

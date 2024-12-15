@@ -68,8 +68,9 @@ pip install -r requirements.txt
 
 For developement 
 ```bash
-cd app1-server
-flask run --port=5000
+cd app2-server
+cd src
+flask run 
 ```
 Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
 
