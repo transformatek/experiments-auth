@@ -11,7 +11,6 @@ class CustomSsoSecurityManager(SecurityManager):
         me = self.appbuilder.sm.oauth_remotes[provider].get("openid-connect/userinfo")
         me.raise_for_status()
         data = me.json()
-        logging.debug("User info from Keycloak: %s", data)
         return {
             "username": data.get("preferred_username", ""),
             "first_name": data.get("given_name", ""),

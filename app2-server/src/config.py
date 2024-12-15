@@ -46,8 +46,8 @@ OAUTH_PROVIDERS = [
         'icon': 'fa-address-card',
         'remote_app': {
             "jwks_uri": "http://localhost:8080/realms/myrealm/protocol/openid-connect/certs",
-            'client_id': 'app1',
-            'client_secret': 'cEtqXR9Z9Lxqgf9tszDHgZ8K8p3FxoIN',
+            'client_id': 'app2',
+            'client_secret': 'ZrgcL85ztes8kNVd8fhSO6EAgd93J9kq',
             'api_base_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect',
             'access_token_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/token',
             'authorize_url': 'http://localhost:8080/realms/myrealm/protocol/openid-connect/auth',
@@ -87,7 +87,6 @@ def fetch_keycloak_rs256_public_cert():
 
 
 JWT_PUBLIC_KEY = fetch_keycloak_rs256_public_cert()
-print(JWT_PUBLIC_KEY)
 
 
 
