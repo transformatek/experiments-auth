@@ -31,8 +31,8 @@
 
 ## Prerequisites
 
-- **Docker**: Utilisé pour déployer et exécuter le fournisseur d'identité (par exemple, Keycloak).
-- **Flask**: Framework backend pour Python.
-- **NextJS**: Framework frontend pour React.
-- **Fournisseur d'Identité**: Choisissez un fournisseur comme Keycloak, Authentik, ou Supabase Auth.
-- **Environnement de développement**: Installez les outils nécessaires tels que Node.js, Python, et Docker.
+- **Docker**: Used to deploy and run the identity provider (e.g. Keycloak).
+- **Flask**: Backend framework for Python.
+- **NextJS**: Frontend framework for React.
+- **Identity Provider**: Choose a provider like Keycloak, Authentik, or Supabase Auth.
+- **Development Environment**: Install the necessary tools like Node.js, Python, and Docker.
