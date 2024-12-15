@@ -46,13 +46,13 @@ Once the container is running, open a terminal to proceed.
 
 First run
 ```bash
-cd app1
+cd app1-web
 npm install
 ```
 
 For developement 
 ```bash
-cd app1
+cd app1-web
 npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
